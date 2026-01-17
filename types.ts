@@ -41,14 +41,16 @@ export interface Provider {
 export interface User {
   id: string;
   name: string;
-  apt: string;
+  email?: string;
+  avatarUrl?: string;
+  apt?: string; // Mantendo opcional já que o Google não fornece isso
   role: 'USER' | 'ADMIN';
 }
 
 export interface CategoryInfo {
   id: MacroCategory;
   label: string;
-  iconName: string; 
+  iconName: string;
   color: string;
 }
 
