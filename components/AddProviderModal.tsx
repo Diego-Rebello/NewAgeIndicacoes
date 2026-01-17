@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Loader2, Sparkles, Check, ArrowRight, ChevronLeft } from 'lucide-react';
+import { X, Loader2, Sparkles, Check, ArrowRight, ChevronLeft, ChevronDown } from 'lucide-react';
 import { MacroCategory, Provider } from '../types';
 import { analyzeProviderService } from '../services/geminiService';
 
@@ -15,7 +15,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
   const [phone, setPhone] = useState('');
   const [description, setDescription] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  
+
   const [step, setStep] = useState<'input' | 'review'>('input');
   const [suggestedCategory, setSuggestedCategory] = useState<MacroCategory>(MacroCategory.OTHER);
   const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
@@ -24,11 +24,13 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
 
   const handleNext = async () => {
     if (!name || !phone || !description) return;
-    
+
     setIsAnalyzing(true);
     try {
       const result = await analyzeProviderService(name, description);
-      setSuggestedCategory(result.category);
+      if (suggestedCategory === MacroCategory.OTHER) {
+        setSuggestedCategory(result.category);
+      }
       setSuggestedTags(result.suggestedTags);
       setStep('review');
     } catch (error) {
@@ -51,7 +53,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
       creatorId: 'current-user',
       createdAt: Date.now()
     };
-    
+
     onAdd(newProvider);
     resetForm();
     onClose();
@@ -74,7 +76,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
     <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm overflow-hidden">
       <div className="bg-white rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl w-full max-w-lg max-h-[95vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300">
         <div className="w-12 h-1 bg-slate-100 rounded-full mx-auto my-4 sm:hidden shrink-0" />
-        
+
         <div className="flex justify-between items-center px-8 py-4 border-b border-slate-50 shrink-0">
           <div className="flex items-center gap-2">
             {step === 'review' && (
@@ -100,7 +102,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Telefone (com DDD)</label>
                 <input
@@ -110,6 +112,22 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Macro Categoria</label>
+                <div className="relative">
+                  <select
+                    value={suggestedCategory}
+                    onChange={(e) => setSuggestedCategory(e.target.value as MacroCategory)}
+                    className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl outline-none transition-all font-bold text-slate-800 appearance-none"
+                  >
+                    {Object.values(MacroCategory).map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                </div>
               </div>
 
               <div>
@@ -148,18 +166,10 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
             <div className="space-y-6">
               <div className="bg-slate-50 p-6 rounded-[2rem] border-2 border-slate-100">
                 <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Classificação Sugerida</h3>
-                
+
                 <div className="mb-6">
                   <label className="block text-[9px] font-black text-slate-500 uppercase mb-2">Macro Categoria</label>
-                  <select 
-                    value={suggestedCategory} 
-                    onChange={(e) => setSuggestedCategory(e.target.value as MacroCategory)}
-                    className="w-full bg-white border-2 border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-800 font-bold outline-none focus:border-blue-500"
-                  >
-                     {Object.values(MacroCategory).map((cat) => (
-                       <option key={cat} value={cat}>{cat}</option>
-                     ))}
-                  </select>
+                  <p className="px-4 py-3 bg-slate-100 rounded-2xl text-sm font-bold text-slate-700 border border-slate-200">{suggestedCategory}</p>
                 </div>
 
                 <div>
@@ -168,7 +178,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
                     {suggestedTags.map((tag, i) => (
                       <span key={i} className="bg-white border border-slate-200 px-3 py-1.5 rounded-xl text-[10px] font-black text-slate-700 flex items-center shadow-sm">
                         #{tag.toUpperCase()}
-                        <button 
+                        <button
                           onClick={() => setSuggestedTags(prev => prev.filter((_, idx) => idx !== i))}
                           className="ml-2 text-slate-300 hover:text-rose-500"
                         >
@@ -176,7 +186,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
                         </button>
                       </span>
                     ))}
-                    <button 
+                    <button
                       onClick={() => {
                         const newTag = prompt("Nova tag:");
                         if (newTag) setSuggestedTags([...suggestedTags, newTag.toLowerCase()]);
