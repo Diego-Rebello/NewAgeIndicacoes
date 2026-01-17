@@ -12,12 +12,12 @@ interface ProviderCardProps {
   onDeleteReview: (providerId: string, reviewId: string) => void;
 }
 
-const ProviderCard: React.FC<ProviderCardProps> = ({ 
-  provider, 
-  currentUser, 
-  onAddReview, 
+const ProviderCard: React.FC<ProviderCardProps> = ({
+  provider,
+  currentUser,
+  onAddReview,
   onDeleteProvider,
-  onDeleteReview 
+  onDeleteReview
 }) => {
   const [showReviews, setShowReviews] = useState(false);
   const isAdmin = currentUser?.role === 'ADMIN';
@@ -30,16 +30,17 @@ const ProviderCard: React.FC<ProviderCardProps> = ({
   }, [provider.reviews]);
 
   const whatsappUrl = formatWhatsAppLink(
-    provider.phone, 
+    provider.phone,
     "Olá, recebi sua recomendação no Condominio Clube New Age"
   );
 
   return (
     <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative group/card">
       {isAdmin && (
-        <button 
+        <button
           onClick={() => onDeleteProvider(provider.id)}
-          className="absolute top-4 right-4 p-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-full transition-colors z-10 sm:opacity-0 group-hover/card:opacity-100"
+          className="absolute top-4 right-4 p-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-full transition-colors z-10"
+          title="Excluir indicação"
         >
           <Trash2 className="w-4 h-4" />
         </button>
@@ -48,11 +49,11 @@ const ProviderCard: React.FC<ProviderCardProps> = ({
       <div className="p-6 flex-grow">
         <header className="mb-3">
           <div className="flex items-center gap-2 mb-1">
-             <span className="text-[9px] uppercase font-black tracking-widest text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{provider.category}</span>
+            <span className="text-[9px] uppercase font-black tracking-widest text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{provider.category}</span>
           </div>
           <h3 className="font-black text-xl text-slate-900 leading-tight">{provider.name}</h3>
         </header>
-        
+
         <p className="text-sm text-slate-500 mb-4 line-clamp-3 font-medium leading-relaxed">{provider.description}</p>
 
         <div className="flex flex-wrap gap-2 mb-6">
@@ -62,38 +63,38 @@ const ProviderCard: React.FC<ProviderCardProps> = ({
         </div>
 
         <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100">
-           <div className="text-center min-w-[60px]">
-             <div className={`text-2xl font-black ${stats.rate >= 70 ? 'text-emerald-600' : stats.rate >= 40 ? 'text-amber-500' : 'text-slate-300'}`}>
-               {stats.total > 0 ? `${stats.rate}%` : '--'}
-             </div>
-             <div className="text-[9px] text-slate-400 uppercase font-black tracking-tighter">Confiança</div>
-           </div>
-           <div className="h-10 w-px bg-slate-200"></div>
-           <div className="flex gap-5">
-             <div className="flex flex-col items-center text-emerald-600">
-               <ThumbsUp className="w-5 h-5 mb-0.5" />
-               <span className="text-xs font-black">{stats.pos}</span>
-             </div>
-             <div className="flex flex-col items-center text-rose-500">
-               <ThumbsDown className="w-5 h-5 mb-0.5" />
-               <span className="text-xs font-black">{stats.neg}</span>
-             </div>
-           </div>
+          <div className="text-center min-w-[60px]">
+            <div className={`text-2xl font-black ${stats.rate >= 70 ? 'text-emerald-600' : stats.rate >= 40 ? 'text-amber-500' : 'text-slate-300'}`}>
+              {stats.total > 0 ? `${stats.rate}%` : '--'}
+            </div>
+            <div className="text-[9px] text-slate-400 uppercase font-black tracking-tighter">Confiança</div>
+          </div>
+          <div className="h-10 w-px bg-slate-200"></div>
+          <div className="flex gap-5">
+            <div className="flex flex-col items-center text-emerald-600">
+              <ThumbsUp className="w-5 h-5 mb-0.5" />
+              <span className="text-xs font-black">{stats.pos}</span>
+            </div>
+            <div className="flex flex-col items-center text-rose-500">
+              <ThumbsDown className="w-5 h-5 mb-0.5" />
+              <span className="text-xs font-black">{stats.neg}</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <footer className="px-6 pb-6 mt-auto">
         <div className="flex items-center gap-3 mb-4">
-          <a 
-            href={whatsappUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center text-sm font-black text-white bg-emerald-500 hover:bg-emerald-600 p-4 rounded-2xl transition-all shadow-lg shadow-emerald-100 active:scale-95"
           >
             <MessageCircle className="w-5 h-5 mr-2" /> Contato
           </a>
-          <button 
-            onClick={() => onAddReview(provider.id)} 
+          <button
+            onClick={() => onAddReview(provider.id)}
             className="p-4 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-100 active:scale-95 transition-all border border-blue-100"
             title="Avaliar"
           >
@@ -101,7 +102,7 @@ const ProviderCard: React.FC<ProviderCardProps> = ({
           </button>
         </div>
 
-        <button 
+        <button
           onClick={() => setShowReviews(!showReviews)}
           className="w-full flex items-center justify-center gap-2 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600"
         >
@@ -117,7 +118,11 @@ const ProviderCard: React.FC<ProviderCardProps> = ({
               provider.reviews.map(review => (
                 <div key={review.id} className="bg-slate-50 p-4 rounded-[1.5rem] relative group/review border border-slate-100">
                   {isAdmin && (
-                    <button onClick={() => onDeleteReview(provider.id, review.id)} className="absolute top-3 right-3 p-1.5 text-slate-300 hover:text-rose-500 sm:opacity-0 group-hover/review:opacity-100">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDeleteReview(provider.id, review.id); }}
+                      className="absolute top-3 right-3 p-1.5 text-rose-500 hover:text-rose-700 bg-white shadow-sm rounded-full border border-rose-100"
+                      title="Excluir avaliação"
+                    >
                       <Trash2 className="w-3 h-3" />
                     </button>
                   )}
