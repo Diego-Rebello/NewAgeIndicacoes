@@ -13,17 +13,20 @@ const IconRenderer = ({ name, className }: { name: string; className?: string })
   return <Icon className={className} />;
 };
 
+const ADMIN_EMAILS = ['diego.uss@gmail.com'];
+
 function App() {
   useEffect(() => {
     // Check active session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
+        const email = session.user.email;
         setCurrentUser({
           id: session.user.id,
           name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Usuário',
-          email: session.user.email,
+          email: email,
           avatarUrl: session.user.user_metadata.avatar_url,
-          role: 'USER', // Default role
+          role: email && ADMIN_EMAILS.includes(email) ? 'ADMIN' : 'USER',
           apt: '101' // Placeholder
         });
       }
@@ -32,12 +35,13 @@ function App() {
     // Listen for changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
+        const email = session.user.email;
         setCurrentUser({
           id: session.user.id,
           name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Usuário',
-          email: session.user.email,
+          email: email,
           avatarUrl: session.user.user_metadata.avatar_url,
-          role: 'USER',
+          role: email && ADMIN_EMAILS.includes(email) ? 'ADMIN' : 'USER',
           apt: '101'
         });
         setModals(m => ({ ...m, login: false }));
