@@ -14,32 +14,4 @@ export const CATEGORIES: CategoryInfo[] = [
   { id: MacroCategory.OTHER, label: 'Outros', iconName: 'MoreHorizontal', color: 'bg-gray-100 text-gray-700' },
 ];
 
-export const INITIAL_PROVIDERS: Provider[] = [
-  {
-    id: '1',
-    name: 'Carlos Silva',
-    phone: '11999991234',
-    category: MacroCategory.RENOVATION_REPAIR,
-    tags: ['eletricista', 'chuveiro', 'tomada'],
-    description: 'Eletricista residencial com 10 anos de experiência.',
-    createdAt: Date.now(),
-    creatorId: 'admin-1',
-    reviews: [
-      { id: 'r1', userId: 'u1', userName: 'Ricardo Ap 12', type: ReviewType.POSITIVE, comment: 'Muito atencioso e resolveu rápido.', createdAt: Date.now() },
-      { id: 'r2', userId: 'u2', userName: 'Julia Ap 44', type: ReviewType.POSITIVE, comment: 'Preço justo.', createdAt: Date.now() }
-    ]
-  },
-  {
-    id: '2',
-    name: 'Diarista Maria',
-    phone: '11988885678',
-    category: MacroCategory.CLEANING_HYGIENE,
-    tags: ['faxina', 'limpeza de vidros'],
-    description: 'Especialista em limpeza pesada.',
-    createdAt: Date.now() - 100000,
-    creatorId: 'admin-1',
-    reviews: [
-      { id: 'r3', userId: 'u3', userName: 'Marcos Ap 101', type: ReviewType.POSITIVE, comment: 'Deixou tudo brilhando.', createdAt: Date.now() }
-    ]
-  }
-];
+
