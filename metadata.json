@@ -1,0 +1,5 @@
+{
+  "name": "CondoService",
+  "description": "A collaborative service recommendation platform for condominium residents featuring smart categorization and reputation tracking.",
+  "requestFramePermissions": []
+}
