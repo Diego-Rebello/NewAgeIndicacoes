@@ -32,10 +32,9 @@ CREATE POLICY "Public providers are viewable by everyone" ON public.providers
 CREATE POLICY "Authenticated users can insert providers" ON public.providers
     FOR INSERT WITH CHECK (auth.role() = 'authenticated');
 
--- Admin Delete Policy (Assuming we identify admins by email in the backend or just allow any auth user to delete for now to mimic previous behavior, OR ideally restricts to specific emails. 
--- For simplicity: Allow Creator to Delete OR Admin. Since we don't have a rigid Admin role in DB yet, we'll allow Authenticated users to delete for now, or you can restrict it manually later.)
-CREATE POLICY "Authenticated users can delete providers" ON public.providers
-    FOR DELETE USING (auth.role() = 'authenticated');
+-- Only admin can delete providers (restricted by email)
+CREATE POLICY "Only admin can delete providers" ON public.providers
+    FOR DELETE USING (auth.jwt() ->> 'email' = 'diego.uss@gmail.com');
 
 -- Policies for Reviews
 CREATE POLICY "Public reviews are viewable by everyone" ON public.reviews
@@ -44,8 +43,9 @@ CREATE POLICY "Public reviews are viewable by everyone" ON public.reviews
 CREATE POLICY "Authenticated users can insert reviews" ON public.reviews
     FOR INSERT WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Authenticated users can delete reviews" ON public.reviews
-    FOR DELETE USING (auth.role() = 'authenticated');
+-- Only admin can delete reviews (restricted by email)
+CREATE POLICY "Only admin can delete reviews" ON public.reviews
+    FOR DELETE USING (auth.jwt() ->> 'email' = 'diego.uss@gmail.com');
 
 
 -- Seed Data (Initial)
