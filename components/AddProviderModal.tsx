@@ -13,6 +13,7 @@ interface AddProviderModalProps {
 const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, onAdd }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [description, setDescription] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
@@ -20,10 +21,26 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
   const [suggestedCategory, setSuggestedCategory] = useState<MacroCategory>(MacroCategory.OTHER);
   const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
 
+  const validatePhone = (value: string): boolean => {
+    const cleanPhone = value.replace(/\D/g, '');
+    if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+      setPhoneError('Telefone deve ter 10 ou 11 dígitos (com DDD)');
+      return false;
+    }
+    setPhoneError('');
+    return true;
+  };
+
+  const handlePhoneChange = (value: string) => {
+    setPhone(value);
+    if (phoneError) validatePhone(value);
+  };
+
   if (!isOpen) return null;
 
   const handleNext = async () => {
     if (!name || !phone || !description) return;
+    if (!validatePhone(phone)) return;
 
     setIsAnalyzing(true);
     try {
@@ -62,6 +79,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
   const resetForm = () => {
     setName('');
     setPhone('');
+    setPhoneError('');
     setDescription('');
     setStep('input');
     setSuggestedTags([]);
@@ -107,11 +125,12 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Telefone (com DDD)</label>
                 <input
                   type="tel"
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl outline-none transition-all font-bold text-slate-800"
+                  className={`w-full px-5 py-4 bg-slate-50 border-2 ${phoneError ? 'border-rose-500 bg-rose-50' : 'border-transparent'} focus:border-blue-500 focus:bg-white rounded-2xl outline-none transition-all font-bold text-slate-800`}
                   placeholder="(11) 98888-0000"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
                 />
+                {phoneError && <p className="text-rose-500 text-xs font-bold mt-2 px-1">{phoneError}</p>}
               </div>
 
               <div>
