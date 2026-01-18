@@ -90,7 +90,7 @@ export const useProviders = () => {
       });
 
       if (error) throw error;
-      // Realtime will update the list
+      fetchProviders();
     } catch (error) {
       console.error('Error adding provider:', error);
       alert('Erro ao adicionar indicação.');
@@ -108,7 +108,7 @@ export const useProviders = () => {
       });
 
       if (error) throw error;
-      // Realtime will update the list
+      fetchProviders();
     } catch (error) {
       console.error('Error adding review:', error);
       alert('Erro ao adicionar avaliação.');
@@ -120,6 +120,7 @@ export const useProviders = () => {
     try {
       const { error } = await supabase.from('providers').delete().eq('id', id);
       if (error) throw error;
+      fetchProviders();
     } catch (error) {
       console.error('Error deleting provider:', error);
       alert('Erro ao excluir indicação.');
@@ -131,6 +132,7 @@ export const useProviders = () => {
     try {
       const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
       if (error) throw error;
+      fetchProviders();
     } catch (error) {
       console.error('Error deleting review:', error);
       alert('Erro ao excluir avaliação.');
