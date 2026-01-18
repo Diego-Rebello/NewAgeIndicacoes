@@ -28,15 +28,12 @@ export const analyzeProviderService = async (
     Descrição: ${description}
 
     Macro Categorias e Exemplos:
-    - ${MacroCategory.RENOVATION_REPAIR}: Pedreiro, Encanador, Pintor, Eletricista, Marido de Aluguel, Empreiteiro, Gesseiro.
-    - ${MacroCategory.CLEANING_HYGIENE}: Diarista, Limpeza de Sofá, Impermeabilização, Limpeza de Vidros.
-    - ${MacroCategory.WOODWORK_FURNITURE}: Marceneiro, Móveis Planejados, Conserto de Sofá (Estofador), Troca de Portas.
-    - ${MacroCategory.TECH_ASSISTANCE}: Manutenção de Ar Condicionado, Aquecedor a Gás, Máquina de Lavar, Geladeira.
-    - ${MacroCategory.HEALTH_WELLNESS}: Médico, Dermatologista, Psicólogo Infantil, Personal Trainer, Dentista.
-    - ${MacroCategory.AUTOMOTIVE}: Mecânica, Auto Elétrica, Lava Car.
-    - ${MacroCategory.FOOD_EVENTS}: Marmitas, Kit Festa, Lembrancinhas Personalizadas.
-    - ${MacroCategory.PROFESSIONAL_SERVICES}: Contador, Veterinário, Costureira (Bordados).
-    - ${MacroCategory.BEAUTY_ESTHETICS}: Cabeleireiro, Manicure, Procedimentos Estéticos (Botox).
+    - ${MacroCategory.HOME_REPAIRS}: Eletricista, Encanador, Pintor, Pedreiro, Marceneiro, Ar Condicionado, Vidraceiro, Gesseiro, Marido de Aluguel.
+    - ${MacroCategory.CLEANING}: Diarista, Limpeza de Sofá, Limpeza de Vidros, Higienização, Lavanderia.
+    - ${MacroCategory.VEHICLES}: Mecânica, Auto Elétrica, Lava Car, Guincho, Borracharia.
+    - ${MacroCategory.BEAUTY_HEALTH}: Cabeleireiro, Manicure, Massagem, Personal Trainer, Psicólogo, Médico, Dentista.
+    - ${MacroCategory.FOOD}: Marmitas, Bolos, Buffet, Kit Festa, Doces, Delivery.
+    - ${MacroCategory.PROFESSIONALS}: Contador, Advogado, Veterinário, Designer, Aulas Particulares, TI.
     - ${MacroCategory.OTHER}: Outros casos.
 
     Regras:

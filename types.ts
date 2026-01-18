@@ -1,14 +1,11 @@
 
 export enum MacroCategory {
-  RENOVATION_REPAIR = 'Reformas e Reparos',
-  CLEANING_HYGIENE = 'Limpeza e Higiene',
-  WOODWORK_FURNITURE = 'Marcenaria e Móveis',
-  TECH_ASSISTANCE = 'Assistência Técnica',
-  HEALTH_WELLNESS = 'Saúde e Bem-Estar',
-  AUTOMOTIVE = 'Serviços Automotivos',
-  FOOD_EVENTS = 'Alimentação e Festas',
-  PROFESSIONAL_SERVICES = 'Serviços Profissionais',
-  BEAUTY_ESTHETICS = 'Beleza e Estética',
+  HOME_REPAIRS = 'Casa e Reparos',
+  CLEANING = 'Limpeza',
+  VEHICLES = 'Veículos',
+  BEAUTY_HEALTH = 'Beleza e Saúde',
+  FOOD = 'Alimentação',
+  PROFESSIONALS = 'Profissionais',
   OTHER = 'Outros'
 }
 
