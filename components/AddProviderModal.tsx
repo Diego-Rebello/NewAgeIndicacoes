@@ -51,7 +51,7 @@ const AddProviderModal: React.FC<AddProviderModalProps> = ({ isOpen, onClose, on
       setSuggestedTags(result.suggestedTags);
       setStep('review');
     } catch (error) {
-      console.error(error);
+      // AI analysis failed - continue to review step
       setStep('review');
     } finally {
       setIsAnalyzing(false);

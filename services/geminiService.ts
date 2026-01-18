@@ -14,7 +14,7 @@ export const analyzeProviderService = async (
   description: string
 ): Promise<AIAnalysisResult> => {
   if (!aiClient) {
-    console.warn("Gemini API Key not found. Using fallback categorization.");
+    // API Key not found - using fallback
     return {
       category: MacroCategory.OTHER,
       suggestedTags: ['novo', 'serviço']
@@ -72,7 +72,7 @@ export const analyzeProviderService = async (
     return JSON.parse(resultText) as AIAnalysisResult;
 
   } catch (error) {
-    console.error("Gemini analysis error:", error);
+    // AI analysis failed - using fallback
     return {
       category: MacroCategory.OTHER,
       suggestedTags: ['serviço', 'geral']

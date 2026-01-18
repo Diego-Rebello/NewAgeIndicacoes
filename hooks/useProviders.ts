@@ -37,7 +37,7 @@ export const useProviders = () => {
 
       setProviders(formattedProviders);
     } catch (error) {
-      console.error('Error fetching providers:', error);
+      // Error handled silently
     } finally {
       setLoading(false);
     }
@@ -92,7 +92,7 @@ export const useProviders = () => {
       if (error) throw error;
       fetchProviders();
     } catch (error) {
-      console.error('Error adding provider:', error);
+      // Error handled with alert
       alert('Erro ao adicionar indicação.');
     }
   };
@@ -110,7 +110,7 @@ export const useProviders = () => {
       if (error) throw error;
       fetchProviders();
     } catch (error) {
-      console.error('Error adding review:', error);
+      // Error handled with alert
       alert('Erro ao adicionar avaliação.');
     }
   };
@@ -122,7 +122,7 @@ export const useProviders = () => {
       if (error) throw error;
       fetchProviders();
     } catch (error) {
-      console.error('Error deleting provider:', error);
+      // Error handled with alert
       alert('Erro ao excluir indicação.');
     }
   };
@@ -134,7 +134,7 @@ export const useProviders = () => {
       if (error) throw error;
       fetchProviders();
     } catch (error) {
-      console.error('Error deleting review:', error);
+      // Error handled with alert
       alert('Erro ao excluir avaliação.');
     }
   };
