@@ -6,6 +6,7 @@ import { CATEGORIES } from './constants';
 import { MacroCategory, ReviewType, Review } from './types';
 import ProviderCard from './components/ProviderCard';
 import AddProviderModal from './components/AddProviderModal';
+import InviteToIndicateCard from './components/InviteToIndicateCard';
 import { useProviders } from './hooks/useProviders';
 
 const IconRenderer = ({ name, className }: { name: string; className?: string }) => {
@@ -191,6 +192,7 @@ function App() {
 
         {providers.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <InviteToIndicateCard onClick={() => requireAuth(() => setModals(m => ({ ...m, addProvider: true })))} />
             {providers.map(p => (
               <ProviderCard
                 key={p.id} provider={p} currentUser={currentUser}
